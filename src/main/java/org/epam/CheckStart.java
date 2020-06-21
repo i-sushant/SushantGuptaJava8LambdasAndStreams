@@ -1,17 +1,13 @@
 package org.epam;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.function.Predicate;
 
 public class CheckStart {
-    private static boolean check(String string) {
-        return string.startsWith("a") && string.length() == 3;
+
+    public String[] getStringStartsWith(String... args) {
+        return Arrays.stream(args).filter(check).toArray(String[]::new);
     }
-    public String[] getStringStartsWith(String ...args) {
-        if(args.length == 0) return new String[0];
-        return Arrays.stream(args)
-                    .filter(CheckStart::check)
-                    .toArray(String[]::new);
-    }
+
+    private static Predicate<String> check = string -> string.startsWith("a") && string.length() == 3;
 }

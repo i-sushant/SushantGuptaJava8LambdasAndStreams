@@ -1,22 +1,18 @@
 package org.epam;
+
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
 public class Palindrome {
-    private static boolean isPalindrome(String string) {
-        int i = 0;
-        int j = string.length() - 1;
-        String tempString = string.toLowerCase();
-        while(i < j) {
-            if(tempString.charAt(i) != tempString.charAt(j)) return false;
-            i++;
-            j--;
-        }
-        return true;
-    }
-    public String[] getPalindromes(String ...args) {
-        if(args.length == 0) return new String[0];
-        return Arrays.stream(args)
-                .filter(Palindrome::isPalindrome)
-                .toArray(String[]::new);
+
+    public static Predicate<String> isItPalindrome = string -> {
+        String temp = string.toLowerCase();
+        return IntStream.range(0, temp.length() / 2)
+                .noneMatch(i -> temp.charAt(i) != temp.charAt(temp.length() - i - 1));
+    };
+
+    public String[] getPalindromes(String... args) {
+        return Arrays.stream(args).filter(isItPalindrome).toArray(String[]::new);
     }
 }
